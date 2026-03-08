@@ -50,7 +50,7 @@ import AstroNatalChart from './AstroNatalChart.js'
 # Basic Usage
 
 ```javascript
-import AstroNatalChart from "astro-natal-chart"
+import AstroNatalChart from "@bfhp/astro-natal-chart"
 
 const data = {
     cusps: [147, 166, 192, 225, 264, 299, 327, 346, 12, 45, 84, 119],
