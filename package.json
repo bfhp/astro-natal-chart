@@ -1,0 +1,17 @@
+{
+  "name": "astro-natal-chart",
+  "description": "Lightweight astrology chart renderer",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "./src/AstroNatalChart.js",
+  "exports": {
+    ".": "./src/AstroNatalChart.js"
+  },
+  "keywords": [
+    "astrology",
+    "natal-chart",
+    "zodiac"
+  ],
+  "license": "MIT",
+  "sideEffects": false
+}

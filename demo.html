@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Astrology Natal Chart Demo</title>
+</head>
+
+<body>
+
+<h1>Astrology Natal Chart Demo</h1>
+
+<div class="container">
+
+    <div id="chart"></div>
+
+    <div>
+        <h3>Legend</h3>
+        <div id="legend"></div>
+    </div>
+
+</div>
+
+<script type="module">
+    import AstroNatalChart from "./src/AstroNatalChart.js"
+    new AstroNatalChart("#chart",{
+        size:600,
+
+        cusps: [147, 166, 192, 225, 264, 299, 327, 346, 12, 45, 84, 119],
+
+        planets: {
+            Sun: 221,
+            Moon: 110,
+            Mercury: 244,
+            Venus: 202,
+            Mars: 184,
+            Jupiter: 308,
+            Saturn: 238,
+            Uranus: 256,
+            Neptune: 271,
+            Pluto: 214
+        },
+
+        planets2: null
+    })
+</script>
+
+</body>
+</html>
