@@ -44,9 +44,18 @@ const ASPECTS = [
 const DEFAULT_COLORS = {
     border: "#008000",
     zodiac: [
-        "#fde0bd","#fdbdba","#fdbedd","#fbbafa",
-        "#ddbdfd","#bdbdfd","#bcdffc","#b5fdfd",
-        "#addac5","#bdfebe","#ddfdbc","#fdfdbd"
+        "#fabdba",
+        "#fddcbd",
+        "#fdfdbd",
+        "#ddfdbc",
+        "#bdfebe",
+        "#addac5",
+        "#b5fdfd",
+        "#bcddfc",
+        "#bdbdfd",
+        "#ddbdfe",
+        "#fbbafa",
+        "#fdbedd",
     ]
 }
 
@@ -114,12 +123,9 @@ export default class AstroNatalChart {
         // центральный круг
         this.centerRadius = this.size/2 * (CENTER_CIRCLE_WIDTH)
 
-        const asc = this.options.cusps[0]
+        const ascLon = this.options.cusps[0]
 
-        this.drawPlanetRing(
-            //this.options.planets,
-            //asc
-        )
+        this.drawPlanetRing()
 
         this.drawHouses(this.options.cusps)
 
@@ -129,19 +135,25 @@ export default class AstroNatalChart {
 
         this.drawAspectMask()
 
-        this.drawPlanets(this.options.planets, asc)
+        this.planetDots = {}
+
+        this.drawPlanets(this.options.planets, ascLon, "A")
+
+        if(this.options.planets2){
+            this.drawPlanets(this.options.planets2, ascLon, "B")
+        }
 
         this.aspects = this.computeAspects(this.planetDots)
 
-        this.drawPlanetSymbols(this.options.planets, asc)
+        this.drawPlanetSymbols(ascLon)
 
-        this.drawZodiacRing(asc)
+        this.drawZodiacRing(ascLon)
 
         this.drawAspects()
 
         this.drawCenterCircle()
 
-        this.drawSunSymbol(asc)
+        this.drawSunSymbol(ascLon)
 
     }
 
@@ -195,7 +207,7 @@ Z
 
             this.svg.appendChild(path)
 
-            this.drawZodiacSymbol(i,startLon + 15,ascLon)
+            this.drawZodiacSymbol(i,startLon + 15, ascLon)
 
         }
     }
@@ -256,9 +268,7 @@ Z
 
     }
 
-    drawPlanets(planets, ascLon){
-
-        this.planetDots = {}
+    drawPlanets(planets, ascLon, group="A"){
 
         for(const name in planets){
 
@@ -272,22 +282,25 @@ Z
 
             dot.setAttribute("cx",dotPos.x)
             dot.setAttribute("cy",dotPos.y)
-            dot.setAttribute("r",2)
+
+            dot.setAttribute("r", group === "A" ? 2 : 2.5)
 
             dot.setAttribute("fill","white")
             dot.setAttribute("stroke",BORDER_COLOR)
 
             this.svg.appendChild(dot)
 
-            this.planetDots[name] = {
+            this.planetDots[name+"_"+group] = {
+                name,
+                group,
                 x: dotPos.x,
                 y: dotPos.y,
-                lon: lon
+                lon
             }
+
         }
     }
-
-    drawPlanetSymbols(planets, ascLon){
+    drawPlanetSymbols(ascLon){
 
         const positions = this.resolvePlanetCollisions(ascLon)
 
@@ -302,7 +315,7 @@ Z
 
             const color = this.getPlanetColor(name,this.aspects)
 
-            text.textContent = PLANET_SYMBOL[name]
+            text.textContent = PLANET_SYMBOL[p.planet]
 
             text.setAttribute("x",symbolPos.x)
             text.setAttribute("y",symbolPos.y)
@@ -315,14 +328,14 @@ Z
             text.setAttribute("font-size",this.size * 0.04)
 
             const title = document.createElementNS(SVG_NS,"title")
-            title.textContent = name
+
+            title.textContent = p.planet
 
             text.appendChild(title)
 
             this.svg.appendChild(text)
 
         }
-
     }
 
     getPlanetColor(planet, aspects){
@@ -346,9 +359,10 @@ Z
 
     resolvePlanetCollisions(ascLon){
 
-        const list = Object.entries(this.planetDots).map(([name,p]) => ({
-            name,
-            angle: this.chartAngle(p.lon, ascLon)
+        const list = Object.entries(this.planetDots).map(([key,p]) => ({
+            name:key,
+            planet:p.name,
+            angle:this.chartAngle(p.lon,ascLon)
         }))
 
         list.sort((a,b)=>a.angle-b.angle)
@@ -357,17 +371,17 @@ Z
 
             for(let i=0;i<list.length-1;i++){
 
-                const a = list[i]
-                const b = list[i+1]
+                const a=list[i]
+                const b=list[i+1]
 
-                let diff = b.angle - a.angle
+                let diff=b.angle-a.angle
 
                 if(diff < PLANET_MIN_SEPARATION){
 
-                    const shift = (PLANET_MIN_SEPARATION - diff)/2
+                    const shift=(PLANET_MIN_SEPARATION-diff)/2
 
-                    a.angle -= shift
-                    b.angle += shift
+                    a.angle-=shift
+                    b.angle+=shift
 
                 }
 
@@ -388,7 +402,7 @@ Z
 
     drawHouses(cusps){
 
-        const asc = cusps[0]
+        const ascLon = cusps[0]
 
         for(let i=0;i<12;i++){
 
@@ -400,7 +414,7 @@ Z
 
             const lon = cusps[i]
 
-            const angle = this.chartAngle(lon,asc)
+            const angle = this.chartAngle(lon,ascLon)
 
             const p1 = this.polar(angle,this.aspectsRadius)
             const p2 = this.polar(angle,this.outerRadius)
@@ -669,22 +683,27 @@ Z
 
         const aspects = []
 
-        const names = Object.keys(planets)
+        const list = Object.values(planets)
 
-        for(let i=0;i<names.length;i++){
+        const hasSecondSet = list.some(p => p.group === "B")
 
-            for(let j=i+1;j<names.length;j++){
+        for(let i=0;i<list.length;i++){
 
-                const a = planets[names[i]]
-                const b = planets[names[j]]
+            for(let j=i+1;j<list.length;j++){
+
+                const a = list[i]
+                const b = list[j]
+
+                // если есть второй набор — аспекты только между группами
+                if(hasSecondSet && a.group === b.group) continue
 
                 const asp = this.getAspect(a.lon,b.lon)
 
                 if(asp){
 
                     aspects.push({
-                        p1:names[i],
-                        p2:names[j],
+                        p1: a.name + "_" + a.group,
+                        p2: b.name + "_" + b.group,
                         ...asp
                     })
 
@@ -695,7 +714,6 @@ Z
         }
 
         return aspects
-
     }
 
     drawAspects(){

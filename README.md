@@ -1,5 +1,7 @@
 # AstroNatalChart
 
+![AstroNatalChart example](docs/example.png)
+
 Lightweight **vanilla JavaScript SVG renderer** for drawing astrological natal charts in the browser.
 No dependencies, no jQuery, and ready for **npm installation**.
 
@@ -13,7 +15,7 @@ The library renders a classic circular horoscope chart including:
 * Aspect lines
 * Planet symbols with collision avoidance
 * Aspect-based coloring of planets
-* Optional second set of planets (synastry / transit style)
+* Optional **second set of planets** (synastry / transit style)
 * SVG output for sharp rendering at any size
 
 ---
@@ -26,6 +28,7 @@ The library renders a classic circular horoscope chart including:
 ✔ Planet **collision avoidance**
 ✔ Classical **aspect calculation**
 ✔ Planet **coloring by strongest aspect**
+✔ Optional **second planet set (synastry / transits)**
 ✔ Customizable **colors and labels**
 ✔ Works in **modern browsers without frameworks**
 
@@ -34,14 +37,14 @@ The library renders a classic circular horoscope chart including:
 # Installation
 
 ```bash
-npm install bfhp/astro-natal-chart
+npm install @bfhp/astro-natal-chart
 ```
 
 or include directly:
 
 ```html
 <script type="module">
-import AstroNatalChart from './AstroNatalChart.js'
+import AstroNatalChart from "./AstroNatalChart.js"
 </script>
 ```
 
@@ -53,20 +56,20 @@ import AstroNatalChart from './AstroNatalChart.js'
 import AstroNatalChart from "@bfhp/astro-natal-chart"
 
 const data = {
-    cusps: [147, 166, 192, 225, 264, 299, 327, 346, 12, 45, 84, 119],
+  cusps: [147, 166, 192, 225, 264, 299, 327, 346, 12, 45, 84, 119],
 
-    planets: {
-        Sun: 221,
-        Moon: 110,
-        Mercury: 244,
-        Venus: 202,
-        Mars: 184,
-        Jupiter: 308,
-        Saturn: 238,
-        Uranus: 256,
-        Neptune: 271,
-        Pluto: 214
-    }
+  planets: {
+    Sun: 221,
+    Moon: 110,
+    Mercury: 244,
+    Venus: 202,
+    Mars: 184,
+    Jupiter: 308,
+    Saturn: 238,
+    Uranus: 256,
+    Neptune: 271,
+    Pluto: 214
+  }
 }
 
 new AstroNatalChart("#chart", data)
@@ -80,11 +83,59 @@ HTML:
 
 ---
 
+# Synastry / Transits
+
+You can optionally provide a **second set of planets**.
+
+When two sets are provided:
+
+* planets from both sets are drawn
+* **aspects are calculated only between sets**
+* symbols are automatically spaced to avoid collisions
+
+Example:
+
+```javascript
+new AstroNatalChart("#chart", {
+  cusps,
+
+  planets: {
+    Sun: 221,
+    Moon: 110,
+    Mercury: 244,
+    Venus: 202,
+    Mars: 184,
+    Jupiter: 308,
+    Saturn: 238,
+    Uranus: 256,
+    Neptune: 271,
+    Pluto: 214
+  },
+
+  planets2: {
+    Sun: 120,
+    Moon: 87,
+    Mercury: 130,
+    Venus: 150,
+    Mars: 210,
+    Jupiter: 300,
+    Saturn: 260,
+    Uranus: 250,
+    Neptune: 270,
+    Pluto: 220
+  }
+})
+```
+
+If `planets2` is **not provided**, aspects are calculated **within the single set** (standard natal chart).
+
+---
+
 # Data Format
 
 ## Cusps
 
-House cusps must be provided in **absolute zodiac degrees**.
+House cusps must be provided in **absolute zodiac degrees (0–360°)**.
 
 Example:
 
@@ -157,12 +208,22 @@ Supported classical aspects:
 | Trine       | 120°  |
 | Opposition  | 180°  |
 
+Default orbs:
+
+| Aspect      | Orb |
+| ----------- | --- |
+| Conjunction | 8°  |
+| Sextile     | 6°  |
+| Square      | 6°  |
+| Trine       | 6°  |
+| Opposition  | 8°  |
+
 Planets are colored according to their **strongest (tightest) aspect**.
 
 Typical colors:
 
 ```
-Conjunction  — blue
+Conjunction  — dark
 Sextile      — green
 Trine        — green
 Square       — red
@@ -175,15 +236,29 @@ Opposition   — red
 
 The chart is drawn using layered SVG elements:
 
-1. Zodiac ring
-2. Planet ring
-3. Aspect lines
-4. Aspect mask
-5. House lines
-6. Asc/Dsc axis
-7. MC/IC axis
-8. Planet symbols
-9. Sun outside the zodiac ring
+1. Planet ring background
+2. House lines
+3. Asc/Dsc axis
+4. MC/IC axis
+5. Aspect background mask
+6. Planet dots
+7. Aspect lines
+8. Zodiac ring
+9. Planet symbols
+10. Center circle
+11. Sun symbol outside the zodiac ring
+
+---
+
+# Collision Avoidance
+
+If several planets are close in longitude (stellium), the renderer automatically:
+
+* detects overlaps
+* slightly shifts planets along the orbit
+* preserves planetary order
+
+This keeps the chart readable without distorting astrological geometry.
 
 ---
 
@@ -194,7 +269,10 @@ You can override colors and labels.
 Example:
 
 ```javascript
-new AstroNatalChart("#chart", data, {
+new AstroNatalChart("#chart", {
+
+  cusps,
+  planets,
 
   colors: {
     border: "#006600",
@@ -216,34 +294,6 @@ new AstroNatalChart("#chart", data, {
 
 ---
 
-# Collision Avoidance
-
-If several planets are close in longitude (stellium), the renderer automatically:
-
-* detects overlaps
-* slightly shifts planets along the orbit
-* preserves planetary order
-
-This keeps the chart readable without distorting astrological geometry.
-
----
-
-# Example
-
-```javascript
-const chart = new AstroNatalChart("#chart", data)
-```
-
-Result:
-
-* classical horoscope layout
-* Asc always on the left
-* MC at the correct angle
-* aspects rendered in the center
-* planets spaced automatically
-
----
-
 # Browser Support
 
 Works in all modern browsers supporting:
@@ -251,6 +301,13 @@ Works in all modern browsers supporting:
 * ES modules
 * SVG
 * modern DOM APIs
+
+Tested in:
+
+* Chrome
+* Firefox
+* Safari
+* Edge
 
 ---
 
