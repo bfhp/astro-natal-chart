@@ -34,7 +34,7 @@ The library renders a classic circular horoscope chart including:
 # Installation
 
 ```bash
-npm install astro-natal-chart
+npm install bfhp/astro-natal-chart
 ```
 
 or include directly:
@@ -53,23 +53,20 @@ import AstroNatalChart from './AstroNatalChart.js'
 import AstroNatalChart from "astro-natal-chart"
 
 const data = {
-  cusps: [
-    147,166,192,225,264,299,
-    327,346,12,45,84,119
-  ],
+    cusps: [147, 166, 192, 225, 264, 299, 327, 346, 12, 45, 84, 119],
 
-  planets: {
-    Sun: 221.5,
-    Moon: 110.1,
-    Mercury: 244.0,
-    Venus: 202.9,
-    Mars: 184.6,
-    Jupiter: 308.7,
-    Saturn: 238.4,
-    Uranus: 256.1,
-    Neptune: 271.6,
-    Pluto: 214.9
-  }
+    planets: {
+        Sun: 221,
+        Moon: 110,
+        Mercury: 244,
+        Venus: 202,
+        Mars: 184,
+        Jupiter: 308,
+        Saturn: 238,
+        Uranus: 256,
+        Neptune: 271,
+        Pluto: 214
+    }
 }
 
 new AstroNatalChart("#chart", data)

@@ -1,17 +1,40 @@
 {
-  "name": "astro-natal-chart",
-  "description": "Lightweight astrology chart renderer",
-  "version": "0.1.0",
+  "name": "@bfhp/astro-natal-chart",
+  "version": "0.1.1",
+  "description": "Lightweight astrology natal chart SVG renderer",
+
   "type": "module",
+
   "main": "./src/AstroNatalChart.js",
+  "module": "./src/AstroNatalChart.js",
+
   "exports": {
-    ".": "./src/AstroNatalChart.js"
+    ".": {
+      "import": "./src/AstroNatalChart.js"
+    }
   },
+
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+
   "keywords": [
     "astrology",
     "natal-chart",
-    "zodiac"
+    "zodiac",
+    "horoscope",
+    "svg"
   ],
+
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bfhp/astro-natal-chart"
+  },
+
+  "homepage": "https://github.com/bfhp/astro-natal-chart",
+
   "license": "MIT",
   "sideEffects": false
 }
