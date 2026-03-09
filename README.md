@@ -20,6 +20,12 @@ The library renders a classic circular horoscope chart including:
 
 ---
 
+## Live Demo
+
+https://bfhp.github.io/astro-natal-chart/
+
+---
+
 # Features
 
 ✔ Pure **vanilla JS**
@@ -31,6 +37,31 @@ The library renders a classic circular horoscope chart including:
 ✔ Optional **second planet set (synastry / transits)**
 ✔ Customizable **colors and labels**
 ✔ Works in **modern browsers without frameworks**
+
+---
+
+# Responsive Design
+
+The chart is **fully responsive**.
+
+It automatically adapts to the **width of its container** using SVG scaling.
+The chart is rendered once and then smoothly scales to any size without recalculating geometry.
+
+This makes it suitable for:
+* responsive layouts
+* mobile devices
+* orientation changes (phone / tablet rotation)
+* flexible containers (flexbox / grid)
+
+Example:
+```html
+<div id="chart" style="max-width:600px;"></div>
+#chart {
+  width: 100%;
+}
+```
+
+The chart will automatically scale to the container width while maintaining a **perfect square aspect ratio**.
 
 ---
 
@@ -78,7 +109,7 @@ new AstroNatalChart("#chart", data)
 HTML:
 
 ```html
-<div id="chart"></div>
+<div id="chart" style="max-width:600px;"></div>
 ```
 
 ---
@@ -286,7 +317,19 @@ new AstroNatalChart("#chart", {
     dsc: "Dsc",
     mc: "MC",
     ic: "IC",
-    sun: "Sun"
+
+    planets: {
+      Sun: "Sun",
+      Moon: "Moon",
+      Mercury: "Mercury",
+      Venus: "Venus",
+      Mars: "Mars",
+      Jupiter: "Jupiter",
+      Saturn: "Saturn",
+      Uranus: "Uranus",
+      Neptune: "Neptune",
+      Pluto: "Pluto",
+    }
   }
 
 })

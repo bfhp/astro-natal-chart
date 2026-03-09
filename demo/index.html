@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <title>AstroNatalChart Demo</title>
+
+    <style>
+
+        body{
+            font-family: system-ui, sans-serif;
+            margin:40px;
+            background:#f5f7fa;
+        }
+
+        h1{
+            text-align:center;
+        }
+
+        .panel{
+            display:flex;
+            gap:10px;
+            justify-content:center;
+            margin-bottom:20px;
+            flex-wrap:wrap;
+        }
+
+        button{
+            padding:8px 14px;
+            border:1px solid #ccc;
+            background:white;
+            cursor:pointer;
+        }
+
+        button:hover{
+            background:#eee;
+        }
+
+        #chart{
+            max-width:700px;
+            margin:auto;
+        }
+
+    </style>
+
+</head>
+<body>
+
+<h1>AstroNatalChart Demo</h1>
+
+<div class="panel">
+
+    <button id="btnNatal">Natal chart</button>
+    <button id="btnSynastry">Synastry</button>
+    <button id="btnRandom">Random chart</button>
+
+    <label>
+        Size
+        <input id="size" type="range" min="300" max="900" value="600">
+    </label>
+
+</div>
+
+<div id="chart"></div>
+
+<script type="module">
+
+    import AstroNatalChart from "../src/AstroNatalChart.js"
+
+    const chartContainer = document.querySelector("#chart")
+
+    let chart
+
+    const baseData = {
+        cusps:[147,166,192,225,264,299,327,346,12,45,84,119],
+        planets:{
+            Sun:221,
+            Moon:110,
+            Mercury:244,
+            Venus:202,
+            Mars:184,
+            Jupiter:308,
+            Saturn:238,
+            Uranus:256,
+            Neptune:271,
+            Pluto:214
+        }
+    }
+
+    const synastryData = {
+        ...baseData,
+        planets2:{
+            Sun:120,
+            Moon:87,
+            Mercury:130,
+            Venus:150,
+            Mars:210,
+            Jupiter:300,
+            Saturn:260,
+            Uranus:250,
+            Neptune:270,
+            Pluto:220
+        }
+    }
+
+    function render(data){
+
+        chart = new AstroNatalChart(chartContainer,{
+            ...data,
+            size:currentSize
+        })
+
+    }
+
+    let currentSize = 600
+
+    render(baseData)
+
+    document.querySelector("#btnNatal").onclick = () => {
+        render(baseData)
+    }
+
+    document.querySelector("#btnSynastry").onclick = () => {
+        render(synastryData)
+    }
+
+    document.querySelector("#btnRandom").onclick = () => {
+
+        const randomPlanets = {}
+
+        for(const p in baseData.planets){
+            randomPlanets[p] = Math.random()*360
+        }
+
+        render({
+            ...baseData,
+            planets:randomPlanets
+        })
+
+    }
+
+    document.querySelector("#size").oninput = e => {
+
+        currentSize = Number(e.target.value)
+
+        chartContainer.style.maxWidth = currentSize+"px"
+
+        render(baseData)
+
+    }
+
+</script>
+
+</body>
+</html>
