@@ -75,7 +75,7 @@ or include directly:
 
 ```html
 <script type="module">
-import AstroNatalChart from "./AstroNatalChart.js"
+    import AstroNatalChart from "./astro-natal-chart.js"
 </script>
 ```
 
