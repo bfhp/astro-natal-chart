@@ -96,6 +96,8 @@ export function drawPlanetSymbols(chart, ascLon){
 
         text.setAttribute("font-size",chart.size * 0.04)
 
+        text.setAttribute("text-decoration", p.group === "A" ? "" : "underline")
+
         const title = document.createElementNS(SVG_NS,"title")
 
         title.textContent = chart.lang.planets[p.planet]
@@ -111,6 +113,7 @@ export function resolvePlanetCollisions(planetDots, ascLon){
 
     const list = Object.entries(planetDots).map(([key,p]) => ({
         name:key,
+        group:p.group,
         planet:p.name,
         angle:chartAngle(p.lon,ascLon)
     }))

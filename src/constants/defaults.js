@@ -11,7 +11,8 @@ export const DEFAULT_COLORS = {
     asc:"#ff0000",
     mc:"#0066cc",
     houses:"#ff0000",
-    sun: "#f1c40f"
+    sun:"#f1c40f",
+    planetsDefault:"#000000"
 }
 
 export const DEFAULT_LANG = {

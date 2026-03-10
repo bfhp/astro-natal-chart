@@ -232,7 +232,7 @@ Pluto
 Supported classical aspects:
 
 | Aspect      | Angle |
-| ----------- | ----- |
+|-------------|-------|
 | Conjunction | 0°    |
 | Sextile     | 60°   |
 | Square      | 90°   |
@@ -242,7 +242,7 @@ Supported classical aspects:
 Default orbs:
 
 | Aspect      | Orb |
-| ----------- | --- |
+|-------------|-----|
 | Conjunction | 8°  |
 | Sextile     | 6°  |
 | Square      | 6°  |

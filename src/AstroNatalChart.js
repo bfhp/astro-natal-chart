@@ -43,9 +43,7 @@ export default class AstroNatalChart {
 
     render(){
 
-        const rect = this.container.getBoundingClientRect()
-
-        // The minimal size is 300
+        // Virtual render size is 1000
         this.size = BASE_SIZE
 
         this.container.innerHTML = ""
