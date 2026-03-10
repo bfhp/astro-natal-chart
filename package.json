@@ -1,6 +1,6 @@
 {
   "name": "@bfhp/astro-natal-chart",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Lightweight astrology natal chart SVG renderer",
   "type": "module",
   "main": "./dist/astro-natal-chart.min.js",

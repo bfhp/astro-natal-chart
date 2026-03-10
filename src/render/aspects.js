@@ -65,7 +65,10 @@ export function drawAspectSymbol(chart, p1, p2, aspect){
 
     const title = document.createElementNS(SVG_NS,"title")
     const aspectName = chart.lang.aspects[aspect.name];
-    title.textContent = `${aspectName} ${aspect.p1} - ${aspect.p2}`
+    const p1name = chart.lang.planets[p1.name];
+    const p2name = chart.lang.planets[p2.name];
+
+    title.textContent = `${aspectName} ${p1name} - ${p2name}`
 
     text.appendChild(title)
 

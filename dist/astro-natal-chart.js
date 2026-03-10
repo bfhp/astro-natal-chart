@@ -253,14 +253,14 @@ function F(t) {
   p.setAttribute("x", i), p.setAttribute("y", e + t.size * 0.035), p.setAttribute("text-anchor", "middle"), p.setAttribute("font-size", t.size * 0.02), p.setAttribute("fill", t.colors.labels), p.textContent = t.lang.dsc, n.appendChild(p);
 }
 function W(t) {
-  const { svg: n } = t, e = t.options.cusps, s = e[0], i = e[9], u = A(i, s), c = (u + 180) % 360, o = t.centerRadius, l = t.outerRadius, r = a(t.cx, t.cy, u, o), b = a(t.cx, t.cy, u, l), p = a(t.cx, t.cy, c, o), R = a(t.cx, t.cy, c, l), S = t.colors.mc, C = 2, E = t.size * 0.015, m = document.createElementNS(d, "circle");
-  m.setAttribute("cx", b.x), m.setAttribute("cy", b.y), m.setAttribute("r", E), m.setAttribute("fill", "none"), m.setAttribute("stroke", S), m.setAttribute("stroke-width", C), n.appendChild(m);
-  const f = document.createElementNS(d, "line"), z = a(t.cx, t.cy, u, l - E);
-  f.setAttribute("x1", r.x), f.setAttribute("y1", r.y), f.setAttribute("x2", z.x), f.setAttribute("y2", z.y), f.setAttribute("stroke", S), f.setAttribute("stroke-width", C), n.appendChild(f);
+  const { svg: n } = t, e = t.options.cusps, s = e[0], i = e[9], u = A(i, s), c = (u + 180) % 360, o = t.centerRadius, l = t.outerRadius, r = a(t.cx, t.cy, u, o), b = a(t.cx, t.cy, u, l), p = a(t.cx, t.cy, c, o), S = a(t.cx, t.cy, c, l), C = t.colors.mc, R = 2, E = t.size * 0.015, m = document.createElementNS(d, "circle");
+  m.setAttribute("cx", b.x), m.setAttribute("cy", b.y), m.setAttribute("r", E), m.setAttribute("fill", "none"), m.setAttribute("stroke", C), m.setAttribute("stroke-width", R), n.appendChild(m);
+  const f = document.createElementNS(d, "line"), N = a(t.cx, t.cy, u, l - E);
+  f.setAttribute("x1", r.x), f.setAttribute("y1", r.y), f.setAttribute("x2", N.x), f.setAttribute("y2", N.y), f.setAttribute("stroke", C), f.setAttribute("stroke-width", R), n.appendChild(f);
   const x = document.createElementNS(d, "line");
-  x.setAttribute("x1", p.x), x.setAttribute("y1", p.y), x.setAttribute("x2", R.x), x.setAttribute("y2", R.y), x.setAttribute("stroke", S), x.setAttribute("stroke-width", C), n.appendChild(x);
-  const y = document.createElementNS(d, "text"), N = a(t.cx, t.cy, u + t.chartLabelShift * 2, l);
-  y.setAttribute("x", N.x), y.setAttribute("y", N.y - t.size * 0.02), y.setAttribute("text-anchor", "middle"), y.setAttribute("font-size", t.size * 0.02), y.setAttribute("fill", t.colors.labels), y.textContent = t.lang.mc, n.appendChild(y);
+  x.setAttribute("x1", p.x), x.setAttribute("y1", p.y), x.setAttribute("x2", S.x), x.setAttribute("y2", S.y), x.setAttribute("stroke", C), x.setAttribute("stroke-width", R), n.appendChild(x);
+  const y = document.createElementNS(d, "text"), z = a(t.cx, t.cy, u + t.chartLabelShift * 2, l);
+  y.setAttribute("x", z.x), y.setAttribute("y", z.y - t.size * 0.02), y.setAttribute("text-anchor", "middle"), y.setAttribute("font-size", t.size * 0.02), y.setAttribute("fill", t.colors.labels), y.textContent = t.lang.mc, n.appendChild(y);
   const g = document.createElementNS(d, "text"), I = a(t.cx, t.cy, c - t.chartLabelShift, l);
   g.setAttribute("x", I.x), g.setAttribute("y", I.y + t.size * 0.01), g.setAttribute("text-anchor", "middle"), g.setAttribute("font-size", t.size * 0.02), g.setAttribute("fill", t.colors.labels), g.textContent = t.lang.ic, n.appendChild(g);
 }
@@ -278,8 +278,8 @@ function Y(t, n, e, s) {
   o.setAttribute("cx", u), o.setAttribute("cy", c), o.setAttribute("r", t.size * 0.01), o.setAttribute("fill", t.colors.background), i.appendChild(o);
   const l = document.createElementNS(d, "text");
   l.setAttribute("x", u), l.setAttribute("y", c), l.setAttribute("fill", s.color), l.setAttribute("font-size", t.size * 0.025), l.setAttribute("text-anchor", "middle"), l.setAttribute("dominant-baseline", "middle"), l.textContent = s.symbol;
-  const r = document.createElementNS(d, "title");
-  r.textContent = `${s.name} ${s.p1} - ${s.p2}`, l.appendChild(r), i.appendChild(l);
+  const r = document.createElementNS(d, "title"), b = t.lang.aspects[s.name], p = t.lang.planets[n.name], S = t.lang.planets[e.name];
+  r.textContent = `${b} ${p} - ${S}`, l.appendChild(r), i.appendChild(l);
 }
 function K(t) {
   const { svg: n } = t, e = document.createElementNS(d, "circle");
