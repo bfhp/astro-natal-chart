@@ -76,7 +76,7 @@ export function drawHouseLabel(chart, angle, number){
     text.setAttribute("dominant-baseline","middle")
 
     text.setAttribute("font-size", chart.size * 0.02)
-    text.setAttribute("fill", chart.colors.text)
+    text.setAttribute("fill", chart.colors.labels)
 
     text.textContent = HOUSE_ROMAN[number-1]
 

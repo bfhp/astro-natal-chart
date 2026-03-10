@@ -1,7 +1,7 @@
 export const DEFAULT_COLORS = {
     border:"#008000",
     background:"#ffffff",
-    text: "#000000",
+    labels: "#000000",
     zodiac:[
         "#fabdba","#fddcbd","#fdfdbd","#ddfdbc",
         "#bdfebe","#addac5","#b5fdfd","#bcddfc",
